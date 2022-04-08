@@ -1,0 +1,27 @@
+{
+  "name": "bravedave/ipmap",
+  "description": "IP Map - Network IP Planning",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Dave Bray",
+      "email": "david@brayworth.com.au"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "bravedave\\ipmap\\": "src/ipmap/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "": "src/app/"
+    }
+  },
+  "scripts": {
+    "start": "./run.sh"
+  },
+  "require": {
+    "bravedave/dvc": "^22.04"
+  }
+}
