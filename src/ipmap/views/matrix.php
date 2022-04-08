@@ -29,6 +29,69 @@ use strings;
 </div>
 <script>
   (_ => {
+    const context = function(e) {
+      if (e.shiftKey)
+        return;
+
+      e.stopPropagation();
+      e.preventDefault();
+
+      _.hideContexts();
+
+      let _context = _.context();
+
+      _context.append($('<a href="#"><strong>edit</strong></a>').on('click', e => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        $(this).trigger('edit');
+
+        _context.close();
+      }));
+
+      _context.append($('<a href="#"><i class="bi bi-trash"></i>delete</a>').on('click', e => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        $(this).trigger('delete');
+
+        _context.close();
+      }));
+
+      _context.open(e);
+    };
+
+    const deleteRow = function() {
+      let _me = $(this);
+      let _dto = _me.data('dto');
+
+      _.ask.alert({
+        text: 'Are you sure you want to delete this entry?',
+        buttons: {
+          'Yes': function(e) {
+
+            $(this).modal('hide');
+
+            _.post({
+              url: _.url('<?= $this->route ?>'),
+              data: {
+                action: 'delete',
+                id: _dto.id
+              },
+
+            }).then(d => {
+              _.growl(d);
+              if ('ack' == d.response) {
+                _me.remove();
+              }
+            });
+
+          }
+
+        }
+      });
+    };
+
     const edit = function() {
       let _me = $(this);
       let _dto = _me.data('dto');
@@ -75,12 +138,13 @@ use strings;
           .data('dto', dto)
           .on('click', function(e) {
             e.stopPropagation();
-            e.preventDefault();
 
             $(this).trigger('edit');
 
           })
+          .on('contextmenu', context)
           .on('edit', edit)
+          .on('delete', deleteRow)
           .on('refresh', refresh)
           .appendTo(tbody);
 

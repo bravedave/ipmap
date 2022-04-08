@@ -38,7 +38,33 @@ class controller extends \Controller {
   protected function postHandler() {
     $action = $this->getPost('action');
 
-    if ('get-by-id' == $action) {
+    if ('delete' == $action) {
+      /*
+        (_ => {
+          _.post({
+            url: _.url('ipmap'),
+            data: {
+              action: 'delete',
+              id : 1
+            },
+          }).then(d => {
+            if ('ack' == d.response) {
+              console.log(d.data);
+            } else {
+              _.growl(d);
+            }
+          });
+
+        })(_brayworth_);
+       */
+      if ($id = (int)$this->getPost('id')) {
+        $dao = new dao\ipmap;
+        $dao->delete($id);
+        Json::ack($action);
+      } else {
+        Json::nak($action);
+      }
+    } elseif ('get-by-id' == $action) {
       /*
         (_ => {
           _.post({
