@@ -823,3 +823,32 @@ use strings;
 ```
 
 >the app now runs at <http://localhost:8080/ipmap> ... yay !
+
+### Install as a module in another DVC application
+
+* Modify composer to reflect this module name, these lines will appear at top
+
+```json
+{
+  "name": "bravedave/ipmap",
+  "description": "IP Map - Network IP Planning",
+}
+```
+
+* publish to github, this module is published to bravedave/ipmap
+* In the application, specify the repostory and install
+
+```bash
+composer config repositories.bravedave-ipmap git https://github.com/bravedave/ipmap
+composer require bravedave/ipmap
+```
+
+and activate it using the example
+
+```php
+<?php
+/**
+ * file src/controller/ipmap.php
+ */
+class ipmap extends bravedave\ipmap\controller {}
+```

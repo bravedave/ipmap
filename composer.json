@@ -22,6 +22,6 @@
     "start": "./run.sh"
   },
   "require": {
-    "bravedave/dvc": "^22.04"
+    "bravedave/dvc": "*"
   }
 }
