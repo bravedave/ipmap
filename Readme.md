@@ -198,7 +198,7 @@ $dbc->defineField('updated', 'datetime');
 
 $dbc->defineField('hostname', 'varchar');
 $dbc->defineField('ip', 'varchar');
-$dbc->defineField('description', 'varchar');
+$dbc->defineField('description', 'varchar', 100);
 
 $dbc->check();  // actually do the work, check that table and fields exis
 ```
