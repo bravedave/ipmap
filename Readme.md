@@ -705,7 +705,7 @@ use strings;
         let __ip = _parts.split('.');
         let a = [];
         __ip.forEach(element => {
-          a.push(('000' + element).substr(-3));
+          a.push(('000' + String(element).trim()).substr(-3));
         });
 
         _ip = a.join('.');
