@@ -5,7 +5,7 @@
 
 ### Goal
 
-Create a module to record IP Mappings in a business. We want to record:
+Create CRUD principled module to record IP Mappings in a business. We want to record:
 
 1. Hostname
 1. IP Address/Range
