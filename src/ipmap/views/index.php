@@ -12,7 +12,7 @@ namespace bravedave\ipmap;
 
 use strings;  ?>
 
-<h6 class="mt-1">ipmap</h6>
+<a class="mt-1 h6" href="<?= strings::url($this->route) ?>">ipmap</a>
 
 <ul class="nav flex-column">
   <li class="nav-item">

@@ -40,6 +40,8 @@ use strings;
 
       let _context = _.context();
 
+      // console.log(e.target.dataset);
+
       _context.append($('<a href="#"><strong>edit</strong></a>').on('click', e => {
         e.stopPropagation();
         e.preventDefault();
@@ -49,11 +51,26 @@ use strings;
         _context.close();
       }));
 
+      if (!!e.target.dataset.ip) {
+        _context.append($(`<a href="https://${e.target.dataset.ip}" target="_blank"><i class="bi bi-box-arrow-up-right"></i>https://${e.target.dataset.ip}</a>`).on('click', e => _context.close()));
+      }
+
       _context.append($('<a href="#"><i class="bi bi-trash"></i>delete</a>').on('click', e => {
         e.stopPropagation();
         e.preventDefault();
 
         $(this).trigger('delete');
+
+        _context.close();
+      }));
+
+      _context.append('<hr>');
+      _context.append($('<a href="#"><i class="bi bi-table"></i>dump</a>').on('click', e => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        console.log($(this).data());
+        console.log($(this).data('dto'));
 
         _context.close();
       }));
@@ -132,26 +149,27 @@ use strings;
       $.each(data, (i, dto) => {
         $(`<tr class="pointer" data-order="${formatIP(dto)}">
           <td class="js-hostname">${dto.hostname}</td>
-          <td class="js-ip">${dto.ip}</td>
+          <td class="js-ip" data-ip="${dto.ip}">${dto.ip} <sup><i class="bi bi-box-arrow-up-right"></i></sup></td>
           <td class="js-description">${dto.description}</td>
         </tr>`)
           .data('dto', dto)
           .on('click', function(e) {
             e.stopPropagation();
 
-            $(this).trigger('edit');
-
+            if (!!e.target.dataset.ip) {
+              window.open(`https://${e.target.dataset.ip}`);
+            } else {
+              $(this).trigger('edit');
+            }
           })
           .on('contextmenu', context)
           .on('edit', edit)
           .on('delete', deleteRow)
           .on('refresh', refresh)
           .appendTo(tbody);
-
       });
 
       _.table.sortOn(table, 'order', 'string', 'asc');
-
     };
 
     const refresh = function(e) {
