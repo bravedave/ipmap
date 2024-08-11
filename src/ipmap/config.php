@@ -16,7 +16,7 @@ class config extends \config {  // noting: config extends global config classes
   const label = 'ipmap';  // general label for application
 
   static function ipmap_checkdatabase() {
-    $dao = new dao\dbinfo;
+    $dao = new dao\dbinfo(null, method_exists(__CLASS__, 'cmsStore') ? self::cmsStore() : self::dataPath());
     // $dao->debug = true;
     $dao->checkVersion('ipmap', self::ipmap_db_version);
   }
